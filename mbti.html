@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>暗区突围MBTI完全体测试</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        
+        :root {
+            --color-primary: #4a6fa5;
+            --color-secondary: #2a4d7a;
+            --color-accent: #ffcc00;
+            --color-success: #4CAF50;
+            --color-danger: #f44336;
+            --color-bg-dark: #0c0c1e;
+            --color-bg-medium: #1a1a3e;
+            --color-text: #f0f0f0;
+            --color-text-light: #cccccc;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--color-bg-dark) 0%, var(--color-bg-medium) 100%);
+            color: var(--color-text);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 2px solid var(--color-primary);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(74, 111, 165, 0.1) 0%, transparent 100%);
+            z-index: -1;
+        }
+        
+        h1 {
+            color: var(--color-accent);
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 0 3px 8px rgba(0, 0, 0, 0.8);
+            background: linear-gradient(to right, var(--color-accent), #ff9900);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .subtitle {
+            font-size: 1.4rem;
+            color: #a0c8ff;
+            margin-bottom: 20px;
+        }
+        
+        .intro-text {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            line-height: 1.7;
+            color: var(--color-text-light);
+            font-size: 1.1rem;
+        }
+        
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .type-card {
+            background: rgba(30, 40, 60, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .type-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--color-primary);
+            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.3);
+        }
+        
+        .type-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .type-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .type-desc {
+            font-size: 0.9rem;
+            color: var(--color-text-light);
+        }
+        
+        .test-section {
+            display: none;
+            background: rgba(20, 25, 40, 0.85);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid #2a3f6d;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .active-section {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            color: var(--color-primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--color-primary);
+        }
+        
+        .question-counter {
+            font-size: 1.1rem;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: rgba(30, 40, 60, 0.6);
+            border-radius: 12px;
+            border-left: 6px solid var(--color-primary);
+            transition: transform 0.3s;
+        }
+        
+        .question:hover {
+            transform: translateY(-3px);
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--color-text);
+            font-weight: 500;
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .option {
+            padding: 18px 20px;
+            background: rgba(50, 70, 100, 0.7);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            display: flex;
+            align-items: center;
+        }
+        
+        .option:hover {
+            background: rgba(70, 100, 150, 0.8);
+            transform: translateY(-2px);
+            border-color: var(--color-primary);
+        }
+        
+        .option.selected {
+            background: rgba(30, 100, 200, 0.9);
+            border-color: var(--color-primary);
+            box-shadow: 0 0 15px rgba(77, 171, 247, 0.5);
+        }
+        
+        .option-key {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(77, 171, 247, 0.2);
+            border-radius: 50%;
+            margin-right: 20px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .option-text {
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        button {
+            padding: 15px 30px;
+            background: linear-gradient(to right, var(--color-primary), var(--color-secondary));
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button i {
+            margin-right: 10px;
+        }
+        
+        button:hover {
+            background: linear-gradient(to right, #5b7fb5, #3a5d8a);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        button:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .result-section {
+            display: none;
+            background: rgba(20, 25, 40, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 20px;
+            border: 3px solid var(--color-primary);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+        
+        .result-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--color-primary);
+        }
+        
+        .result-title {
+            color: var(--color-accent);
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-subtitle {
+            color: #a0c8ff;
+            font-size: 1.5rem;
+        }
+        
+        .result-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .result-sidebar {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .result-emoji {
+            font-size: 6rem;
+            margin-bottom: 20px;
+        }
+        
+        .result-type {
+            font-size: 2rem;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+        }
+        
+        .result-percentage {
+            font-size: 1.2rem;
+            color: var(--color-text-light);
+        }
+        
+        .result-details {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .detail-box {
+            background: rgba(30, 40, 60, 0.6);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--color-primary);
+        }
+        
+        .detail-title {
+            color: var(--color-accent);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+        
+        .traits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .trait {
+            background: rgba(77, 171, 247, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid var(--color-primary);
+        }
+        
+        .type-comparison {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .dimension {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .dimension-name {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--color-text-light);
+        }
+        
+        .dimension-bar {
+            height: 20px;
+            background: rgba(50, 70, 100, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        
+        .dimension-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--color-primary), #2a8cff);
+            border-radius: 10px;
+        }
+        
+        .dimension-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .similar-types {
+            margin-top: 30px;
+        }
+        
+        .similar-list {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .similar-type {
+            background: rgba(74, 111, 165, 0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--color-primary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .similar-type:hover {
+            background: rgba(74, 111, 165, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .restart-btn {
+            display: block;
+            margin: 40px auto 0;
+            background: linear-gradient(to right, #d35400, #a84300);
+            padding: 15px 40px;
+            font-size: 1.3rem;
+        }
+        
+        .restart-btn:hover {
+            background: linear-gradient(to right, #e36410, #b85310);
+        }
+        
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .progress-text {
+            font-size: 1.1rem;
+            color: #a0c8ff;
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background: rgba(50, 70, 100, 0.5);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, var(--color-primary), #2a8cff);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 6px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #888;
+            font-size: 0.9rem;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .game-icon {
+            font-size: 1.5rem;
+            margin: 0 5px;
+        }
+        
+        .dimension-label {
+            font-size: 0.9rem;
+            margin-top: 5px;
+            color: var(--color-text-light);
+        }
+        
+        .dimension-highlight {
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .result-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .type-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-crosshairs game-icon"></i> 暗区突围完全体MBTI测试 <i class="fas fa-user-secret game-icon"></i></h1>
+            <p class="subtitle">探索你的专属暗区战术人格 - 16种完整人格类型</p>
+            <p class="intro-text">在暗区突围的世界中，每个玩家都有独特的战术风格。本测试基于荣格心理学和MBTI理论，结合暗区突围游戏特点，为你精准定位16种战术人格类型。通过回答20个问题，深入了解你的暗区作战风格、优势和弱点。</p>
+        </header>
+        
+        <!-- 人格类型预览 -->
+        <div class="type-grid" id="type-preview">
+            <div class="type-card" data-type="ESTP">
+                <div class="type-emoji">⚔️🏃</div>
+                <div class="type-name">ESTP - 狂暴跑刀人</div>
+                <div class="type-desc">极限冲锋，高风险高回报</div>
+            </div>
+            <div class="type-card" data-type="ISTJ">
+                <div class="type-emoji">🧘📊</div>
+                <div class="type-name">ISTJ - 稳健规划师</div>
+                <div class="type-desc">步步为营，精确计算风险</div>
+            </div>
+            <div class="type-card" data-type="ENFJ">
+                <div class="type-emoji">🎭🤝</div>
+                <div class="type-name">ENFJ - 社交伪装者</div>
+                <div class="type-desc">擅长伪装，团队气氛调节者</div>
+            </div>
+            <div class="type-card" data-type="INTJ">
+                <div class="type-emoji">🧠🎯</div>
+                <div class="type-name">INTJ - 战术大师</div>
+                <div class="type-desc">完美计划，精确执行</div>
+            </div>
+        </div>
+        
+        <!-- 开始测试按钮 -->
+        <div style="text-align: center; margin: 40px 0;">
+            <button id="start-test-btn" style="padding: 20px 50px; font-size: 1.4rem;">
+                <i class="fas fa-play"></i> 开始测试
+            </button>
+        </div>
+        
+        <!-- 测试部分 -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <div class="progress-text">测试进度</div>
+                <div class="progress-text">问题 <span id="current-question">1</span>/20</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+        </div>
+        
+        <div id="test-container"></div>
+        
+        <!-- 结果展示部分 -->
+        <div id="result-section" class="result-section">
+            <div class="result-header">
+                <h2 class="result-title">你的暗区突围人格类型是：</h2>
+                <p class="result-subtitle" id="result-type">ESTP - 狂暴跑刀人</p>
+            </div>
+            
+            <div class="result-content">
+                <div class="result-sidebar">
+                    <div class="result-emoji" id="result-emoji">⚔️🏃</div>
+                    <div class="result-type" id="result-full-type">ESTP</div>
+                    <div class="result-percentage">匹配度：<span id="match-percentage">92%</span></div>
+                    
+                    <div class="type-comparison" id="type-comparison">
+                        <!-- 维度分数将在这里动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="result-details">
+                    <div class="detail-box">
+                        <div class="detail-title">人格描述</div>
+                        <p id="result-desc">你是一个极限冲锋的战士，享受高风险高回报的刺激。你擅长快速决策，在混乱中寻找机会，是团队中的开路先锋。你的座右铭是"富贵险中求"，经常在绝境中创造奇迹。</p>
+                    </div>
+                    
+                    <div class="detail-box">
+                        <div class="detail-title">核心特质</div>
+                        <div class="traits" id="result-traits">
+                            <!-- 特质标签将在这里动态生成 -->
+                        </div>
+                    </div>
+                    
+                    <div class="detail-box">
+                        <div class="detail-title">优势分析</div>
+                        <p id="result-strengths">• 反应速度快，适应力强<br>• 敢于冒险，创造机会能力强<br>• 在压力下表现出色，善于绝地反击<br>• 装备利用效率高，擅长以小博大</p>
+                    </div>
+                    
+                    <div class="detail-box">
+                        <div class="detail-title">弱点与建议</div>
+                        <p id="result-weaknesses">• 有时过于冲动，缺乏耐心<br>• 团队协作时可能过于个人主义<br>• 容易低估风险，造成不必要的损失<br><br><strong>改进建议：</strong> 适当放慢节奏，与队友保持沟通，制定备用计划。</p>
+                    </div>
+                    
+                    <div class="detail-box">
+                        <div class="detail-title">推荐装备配置</div>
+                        <p id="result-gear">• 主武器：高机动性冲锋枪/突击步枪<br>• 防具：三级甲+三级头（追求机动性）<br>• 投掷物：进攻手雷优先<br>• 背包：中型战术背包（便于快速转移）<br>• 战术道具：止痛药、能量饮料（保持状态）</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="similar-types">
+                <div class="detail-title">相似人格类型</div>
+                <div class="similar-list" id="similar-types">
+                    <!-- 相似类型将在这里动态生成 -->
+                </div>
+            </div>
+            
+            <button class="restart-btn" id="restart-btn">
+                <i class="fas fa-redo"></i> 重新测试
+            </button>
+        </div>
+        
+        <div class="footer">
+            <p>暗区突围MBTI完全体测试 | 基于荣格心理学和游戏行为分析 | 仅供娱乐参考</p>
+            <p>测试包含20个问题，预计耗时5-7分钟</p>
+        </div>
+    </div>
+
+    <script>
+        // 完整的16种暗区突围人格类型数据
+        const personalityTypes = {
+            "ESTP": {
+                name: "狂暴跑刀人",
+                emoji: "⚔️🏃",
+                fullName: "ESTP - 狂暴跑刀人",
+                desc: "你是一个极限冲锋的战士，享受高风险高回报的刺激。你擅长快速决策，在混乱中寻找机会，是团队中的开路先锋。你的座右铭是'富贵险中求'，经常在绝境中创造奇迹。",
+                traits: ["极限冲锋", "高风险偏好", "快速决策", "适应力强", "个人英雄主义"],
+                strengths: "• 反应速度快，适应力强<br>• 敢于冒险，创造机会能力强<br>• 在压力下表现出色，善于绝地反击<br>• 装备利用效率高，擅长以小博大",
+                weaknesses: "• 有时过于冲动，缺乏耐心<br>• 团队协作时可能过于个人主义<br>• 容易低估风险，造成不必要的损失<br><br><strong>改进建议：</strong> 适当放慢节奏，与队友保持沟通，制定备用计划。",
+                gear: "• 主武器：高机动性冲锋枪/突击步枪<br>• 防具：三级甲+三级头（追求机动性）<br>• 投掷物：进攻手雷优先<br>• 背包：中型战术背包（便于快速转移）<br>• 战术道具：止痛药、能量饮料（保持状态）",
+                similar: ["ESFP", "ENTP", "ISTP"]
+            },
+            "ISTJ": {
+                name: "稳健规划师",
+                emoji: "🧘📊",
+                fullName: "ISTJ - 稳健规划师",
+                desc: "你是一个谨慎细致的策略家，重视计划与执行。你会在进入暗区前做好充分准备，精确计算每一颗子弹的价值。你的撤离成功率通常很高，因为你从不打无准备之仗。",
+                traits: ["谨慎稳健", "计划性强", "注重细节", "风险规避", "执行力强"],
+                strengths: "• 准备充分，极少出现物资短缺<br>• 决策理性，避免不必要的风险<br>• 撤离成功率高，收益稳定<br>• 团队中可靠的支援者",
+                weaknesses: "• 有时过于保守，错过机会<br>• 应变能力相对较弱<br>• 可能显得缺乏冒险精神<br><br><strong>改进建议：</strong> 偶尔尝试一些风险适中的机会，培养快速应变能力。",
+                gear: "• 主武器：中远距离步枪（稳定性优先）<br>• 防具：四级甲+三级头（平衡防护与机动）<br>• 投掷物：烟雾弹、闪光弹（战术控制）<br>• 背包：大型登山包（携带充足补给）<br>• 战术道具：全套医疗物资+额外弹药",
+                similar: ["ISFJ", "ESTJ", "INTJ"]
+            },
+            "ENFJ": {
+                name: "社交伪装者",
+                emoji: "🎭🤝",
+                fullName: "ENFJ - 社交伪装者",
+                desc: "你是一个天生的团队领袖和外交家，擅长在暗区中建立临时联盟。你能够快速判断他人意图，利用伪装和沟通技巧达成目标。即使在敌对环境中，你也能找到合作的可能。",
+                traits: ["社交高手", "善于伪装", "团队领导", "沟通能力强", "战略思维"],
+                strengths: "• 出色的社交和谈判能力<br>• 善于建立临时联盟和合作<br>• 团队士气鼓舞者<br>• 能准确判断他人意图",
+                weaknesses: "• 有时过于信任他人<br>• 可能因帮助队友而陷入险境<br>• 决策时可能考虑人情过多<br><br><strong>改进建议：</strong> 保持必要的警惕，平衡人情与理性决策。",
+                gear: "• 主武器：多功能突击步枪<br>• 防具：伪装服+三级头（隐蔽性优先）<br>• 投掷物：多种类型各带一些<br>• 背包：中型背包（兼顾容量与机动）<br>• 战术道具：通讯设备+医疗包（辅助队友）",
+                similar: ["ESFJ", "ENFP", "ENTJ"]
+            },
+            "INTJ": {
+                name: "战术大师",
+                emoji: "🧠🎯",
+                fullName: "INTJ - 战术大师",
+                desc: "你是一个战略分析专家，擅长制定完美计划并精确执行。你会在战前研究地图、资源点和敌人习惯，制定多套应对方案。在团队中，你是无可替代的战术大脑。",
+                traits: ["战略思维", "完美主义", "分析能力强", "独立自主", "长远规划"],
+                strengths: "• 出色的战略规划和预判能力<br>• 善于分析局势和数据<br>• 执行计划时极度专注<br>• 能同时考虑多种可能性",
+                weaknesses: "• 可能过于执着于原定计划<br>• 对队友失误容忍度较低<br>• 有时思考时间过长<br><br><strong>改进建议：</strong> 提高临场应变能力，给予队友更多信任和空间。",
+                gear: "• 主武器：高精度射手步枪/狙击枪<br>• 防具：根据任务需求精心搭配<br>• 投掷物：战术性投掷物为主<br>• 背包：模块化战术背包<br>• 战术道具：望远镜、心跳探测仪（情报收集）",
+                similar: ["INTP", "ENTJ", "ISTJ"]
+            },
+            "ESFP": {
+                name: "机会主义者",
+                emoji: "🎲💰",
+                fullName: "ESFP - 机会主义者",
+                desc: "你是一个灵活的机会把握者，善于在混乱中发现并利用机会。你享受游戏的乐趣，不畏惧风险，但也懂得适时撤退。你的游戏风格充满变数和惊喜。",
+                traits: ["机会主义", "灵活应变", "享受过程", "直觉敏锐", "资源嗅觉强"],
+                strengths: "• 出色的机会发现能力<br>• 灵活适应各种情况<br>• 保持积极游戏心态<br>• 资源价值判断准确",
+                weaknesses: "• 计划性相对较弱<br>• 可能因追逐机会而陷入危险<br>• 决策有时依赖直觉而非分析<br><br><strong>改进建议：</strong> 适当加强战前规划，平衡直觉与理性分析。",
+                gear: "• 主武器：全能型突击步枪<br>• 防具：高机动性防具套装<br>• 投掷物：各种类型都带一些<br>• 背包：快速存取背包<br>• 战术道具：快速医疗物品+能量补充",
+                similar: ["ESTP", "ENFP", "ISFP"]
+            },
+            "INFP": {
+                name: "理想主义探索者",
+                emoji: "🌈🔍",
+                fullName: "INFP - 理想主义探索者",
+                desc: "你是一个富有同情心的探索者，重视游戏体验而非单纯胜负。你可能会帮助陌生人，探索地图的每个角落，寻找故事和细节。你的暗区之旅充满人情味和发现。",
+                traits: ["富有同情心", "注重体验",  "理想主义", "善于观察", "创造性思维"],
+                strengths: "• 丰富的游戏体验和发现<br>• 善于观察细节和环境<br>• 创造性解决问题<br>• 能够建立深厚的队友关系",
+                weaknesses: "• 竞争力相对较弱<br>• 可能因帮助他人而牺牲自己<br>• 对残酷的游戏机制适应较慢<br><br><strong>改进建议：</strong> 在必要时采取更现实的策略，平衡理想与现实。",
+                gear: "• 主武器：中距离多功能武器<br>• 防具：均衡型防具<br>• 投掷物：非致命性战术道具<br>• 背包：探索型背包（大容量）<br>• 战术道具：各种探索工具+医疗包",
+                similar: ["INFJ", "ENFP", "ISFP"]
+            },
+            "ENTJ": {
+                name: "战略指挥官",
+                emoji: "👑⚔️",
+                fullName: "ENTJ - 战略指挥官",
+                desc: "你是一个天生的领导者和战略家，擅长指挥团队取得胜利。你眼光长远，能够制定宏大的战略并在执行中果断调整。在暗区中，你是团队的核心和方向。",
+                traits: ["领导才能", "战略眼光", "果断决策", "目标导向", "竞争意识强"],
+                strengths: "• 出色的领导和指挥能力<br>• 宏观战略规划能力<br>• 果断的决策力<br>• 善于激励和协调团队",
+                weaknesses: "• 可能过于强势<br>• 对细节关注不足<br>• 压力下可能忽视队友感受<br><br><strong>改进建议：</strong> 更多听取队友意见，关注战术执行细节。",
+                gear: "• 主武器：高伤害突击步枪<br>• 防具：指挥官套装（防护与通讯兼顾）<br>• 投掷物：指挥和控制类投掷物<br>• 背包：指挥型战术背包<br>• 战术道具：团队通讯设备+指挥工具",
+                similar: ["INTJ", "ESTJ", "ENTP"]
+            },
+            "ISFP": {
+                name: "艺术型游侠",
+                emoji: "🎨🏹",
+                fullName: "ISFP - 艺术型游侠",
+                desc: "你是一个注重美感和体验的自由游侠，按照自己的节奏和风格探索暗区。你擅长利用环境和直觉，以创造性的方式解决问题。你的游戏风格独具特色和个人印记。",
+                traits: ["注重美感",  "自由独立", "直觉敏锐", "创造性", "适应环境"],
+                strengths: "• 独特的个人风格和创造性<br>• 出色的环境适应和利用能力<br>• 敏锐的直觉和观察力<br>• 独立解决问题的能力",
+                weaknesses: "• 可能缺乏团队协作<br>• 对常规战术缺乏兴趣<br>• 计划性和纪律性较弱<br><br><strong>改进建议：</strong> 适当参与团队协作，平衡个人风格与团队需求。",
+                gear: "• 主武器：个性化定制武器<br>• 防具：个性化外观防具<br>• 投掷物：创意性使用各种道具<br>• 背包：个性化背包（外观优先）<br>• 战术道具：各种创意工具和道具",
+                similar: ["INFP", "ESFP", "ISTP"]
+            }
+        };
+
+        // 测试问题数据
+        const questions = [
+            {
+                text: "进入暗区前，你的首要准备工作是：",
+                options: [
+                    { text: "检查装备，确保武器弹药充足", value: "S" },
+                    { text: "研究地图和资源点分布", value: "N" },
+                    { text: "快速组队，寻找可靠队友", value: "E" },
+                    { text: "规划多条撤离路线", value: "J" }
+                ]
+            },
+            {
+                text: "遇到敌人小队时，你的第一反应是：",
+                options: [
+                    { text: "评估敌我实力，决定交战或回避", value: "T" },
+                    { text: "立即寻找掩体，准备战斗", value: "S" },
+                    { text: "尝试沟通，看能否合作", value: "F" },
+                    { text: "分析敌人可能的目的和路线", value: "N" }
+                ]
+            },
+            {
+                text: "关于装备选择，你更看重：",
+                options: [
+                    { text: "武器的火力和杀伤效率", value: "T" },
+                    { text: "装备的隐蔽性和伪装效果", value: "S" },
+                    { text: "与队友装备的互补性", value: "F" },
+                    { text: "装备的战术多样性和适应性", value: "N" }
+                ]
+            },
+            {
+                text: "你的资源收集策略是：",
+                options: [
+                    { text: "只拿高价值物品，快速转移", value: "P" },
+                    { text: "系统性地搜索每个区域", value: "J" },
+                    { text: "根据当前需求选择性收集", value: "S" },
+                    { text: "优先收集团队所需资源", value: "F" }
+                ]
+            },
+            {
+                text: "在团队中，你通常：",
+                options: [
+                    { text: "担任突击手，冲锋在前", value: "E" },
+                    { text: "提供火力支援和掩护", value: "I" },
+                    { text: "侦察敌情，提供信息", value: "N" },
+                    { text: "治疗和辅助队友", value: "F" }
+                ]
+            },
+            {
+                text: "面对高价值但高风险目标，你会：",
+                options: [
+                    { text: "果断尝试，高风险高回报", value: "P" },
+                    { text: "制定详细计划后再行动", value: "J" },
+                    { text: "评估成功率后再决定", value: "T" },
+                    { text: "考虑团队整体利益", value: "F" }
+                ]
+            },
+            {
+                text: "你的背包管理原则是：",
+                options: [
+                    { text: "轻装上阵，留空间装战利品", value: "P" },
+                    { text: "分类整理，高效利用空间", value: "J" },
+                    { text: "根据任务需求精确配置", value: "S" },
+                    { text: "多带团队共享资源", value: "F" }
+                ]
+            },
+            {
+                text: "发现落单的敌人玩家，你会：",
+                options: [
+                    { text: "立即攻击，获取击杀", value: "E" },
+                    { text: "观察其装备和动向再决定", value: "I" },
+                    { text: "尝试沟通或交易", value: "F" },
+                    { text: "分析其可能的价值和风险", value: "N" }
+                ]
+            },
+            {
+                text: "你的撤离时机通常是：",
+                options: [
+                    { text: "达到目标或负重满时", value: "J" },
+                    { text: "感觉有危险时立即撤离", value: "S" },
+                    { text: "帮助队友完成后一起撤离", value: "F" },
+                    { text: "坚持到最后可能的时间", value: "P" }
+                ]
+            },
+            {
+                text: "面对意外情况（如刷新男团），你会：",
+                options: [
+                    { text: "快速应对，凭直觉行动", value: "P" },
+                    { text: "执行预定应急计划", value: "J" },
+                    { text: "冷静观察，寻找规律", value: "S" },
+                    { text: "分析局势，制定新策略", value: "N" }
+                ]
+            },
+            {
+                text: "你更倾向于哪种作战方式：",
+                options: [
+                    { text: "正面突击，火力压制", value: "E" },
+                    { text: "隐蔽埋伏，一击致命", value: "I" },
+                    { text: "战术配合，团队协作", value: "F" },
+                    { text: "心理博弈，制造假象", value: "N" }
+                ]
+            },
+            {
+                text: "你的情报收集方式是：",
+                options: [
+                    { text: "直接侦察，获取第一手信息", value: "S" },
+                    { text: "分析地图和玩家行为模式", value: "N" },
+                    { text: "与其他玩家交流获取信息", value: "E" },
+                    { text: "系统记录和分析历史数据", value: "T" }
+                ]
+            },
+            {
+                text: "在暗区中，你最看重：",
+                options: [
+                    { text: "击杀数和战利品价值", value: "T" },
+                    { text: "生存率和安全撤离", value: "S" },
+                    { text: "团队合作和友谊", value: "F" },
+                    { text: "战术执行和战略目标", value: "N" }
+                ]
+            },
+            {
+                text: "你的学习游戏的方式是：",
+                options: [
+                    { text: "实战中积累经验", value: "P" },
+                    { text: "研究攻略和教程", value: "J" },
+                    { text: "向高手请教学习", value: "F" },
+                    { text: "分析自己的录像复盘", value: "T" }
+                ]
+            },
+            {
+                text: "你如何选择交战距离：",
+                options: [
+                    { text: "近距离交战，刺激直接", value: "E" },
+                    { text: "中距离，平衡安全与效率", value: "S" },
+                    { text: "根据武器和地形选择最佳距离", value: "N" },
+                    { text: "配合团队需要选择距离", value: "F" }
+                ]
+            },
+            {
+                text: "你的装备购买策略是：",
+                options: [
+                    { text: "购买顶级装备，追求性能", value: "T" },
+                    { text: "性价比优先，控制成本", value: "S" },
+                    { text: "购买团队需要的装备", value: "F" },
+                    { text: "根据战术需求定制装备", value: "N" }
+                ]
+            },
+            {
+                text: "你如何看待伪装潜入模式：",
+                options: [
+                    { text: "高风险高回报的刺激方式", value: "P" },
+                    { text: "低成本获取资源的策略", value: "J" },
+                    { text: "体验不同玩法的机会", value: "F" },
+                    { text: "观察和学习的机会", value: "N" }
+                ]
+            },
+            {
+                text: "你更擅长哪种战术：",
+                options: [
+                    { text: "猛攻", value: "E" },
+                    { text: "火力压制", value: "I" },
+                    { text: "老鼠", value: "N" },
+                    { text: "医疗兵", value: "F" }
+                ]
+            },
+            {
+                text: "你的游戏时间分配倾向：",
+                options: [
+                    { text: "大部分时间在实战中", value: "P" },
+                    { text: "战前准备和战后整理", value: "J" },
+                    { text: "与队友交流沟通", value: "E" },
+                    { text: "研究战术和分析数据", value: "T" }
+                ]
+            },
+            {
+                text: "你认为暗区突围最重要的能力是：",
+                options: [
+                    { text: "快速反应和精准枪法", value: "S" },
+                    { text: "战术思维和局势判断", value: "N" },
+                    { text: "团队协作和沟通", value: "F" },
+                    { text: "资源管理和风险控制", value: "T" }
+                ]
+            }
+        ];
+
+        // 测试状态
+        let currentQuestion = 0;
+        let answers = [];
+        let scores = {
+            E: 0, I: 0,  // 外向-内向
+            S: 0, N: 0,  // 实感-直觉
+            T: 0, F: 0,  // 思考-情感
+            J: 0, P: 0   // 判断-感知
+        };
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 预览卡片点击事件
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const type = this.getAttribute('data-type');
+                    showTypeDetail(type);
+                });
+            });
+            
+            // 开始测试按钮
+            document.getElementById('start-test-btn').addEventListener('click', startTest);
+            
+            // 重新测试按钮
+            document.getElementById('restart-btn').addEventListener('click', restartTest);
+            
+            // 初始化测试容器
+            initializeTest();
+        });
+        
+        // 显示类型详情
+        function showTypeDetail(type) {
+            const data = personalityTypes[type];
+            if (!data) return;
+            
+            document.getElementById('result-type').textContent = data.fullName;
+            document.getElementById('result-emoji').textContent = data.emoji;
+            document.getElementById('result-full-type').textContent = type;
+            document.getElementById('match-percentage').textContent = "点击开始测试查看你的类型";
+            document.getElementById('result-desc').innerHTML = data.desc;
+            
+            // 更新特质
+            const traitsContainer = document.getElementById('result-traits');
+            traitsContainer.innerHTML = '';
+            data.traits.forEach(trait => {
+                const traitElement = document.createElement('div');
+                traitElement.className = 'trait';
+                traitElement.textContent = trait;
+                traitsContainer.appendChild(traitElement);
+            });
+            
+            document.getElementById('result-strengths').innerHTML = data.strengths;
+            document.getElementById('result-weaknesses').innerHTML = data.weaknesses;
+            document.getElementById('result-gear').innerHTML = data.gear;
+            
+            // 更新相似类型
+            const similarContainer = document.getElementById('similar-types');
+            similarContainer.innerHTML = '';
+            data.similar.forEach(simType => {
+                const simData = personalityTypes[simType];
+                if (simData) {
+                    const simElement = document.createElement('div');
+                    simElement.className = 'similar-type';
+                    simElement.textContent = simData.fullName;
+                    simElement.addEventListener('click', () => showTypeDetail(simType));
+                    similarContainer.appendChild(simElement);
+                }
+            });
+            
+            // 更新维度比较
+            updateDimensionComparison(type);
+            
+            // 显示结果区域
+            document.getElementById('result-section').style.display = 'block';
+            document.getElementById('type-preview').style.display = 'none';
+            document.getElementById('start-test-btn').style.display = 'none';
+            
+            // 滚动到结果
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 更新维度比较
+        function updateDimensionComparison(type) {
+            const dimensions = {
+                "E-I": { E: 0, I: 0 },
+                "S-N": { S: 0, N: 0 },
+                "T-F": { T: 0, F: 0 },
+                "J-P": { J: 0, P: 0 }
+            };
+            
+            // 根据类型设置维度值
+            if (type.includes("E")) dimensions["E-I"].E = 70;
+            if (type.includes("I")) dimensions["E-I"].I = 70;
+            if (type.includes("S")) dimensions["S-N"].S = 70;
+            if (type.includes("N")) dimensions["S-N"].N = 70;
+            if (type.includes("T")) dimensions["T-F"].T = 70;
+            if (type.includes("F")) dimensions["T-F"].F = 70;
+            if (type.includes("J")) dimensions["J-P"].J = 70;
+            if (type.includes("P")) dimensions["J-P"].P = 70;
+            
+            const container = document.getElementById('type-comparison');
+            container.innerHTML = '';
+            
+            for (const [dimName, dimValues] of Object.entries(dimensions)) {
+                const dimElement = document.createElement('div');
+                dimElement.className = 'dimension';
+                
+                const dimNameElement = document.createElement('div');
+                dimNameElement.className = 'dimension-name';
+                dimNameElement.textContent = dimName;
+                dimElement.appendChild(dimNameElement);
+                
+                const dimBar = document.createElement('div');
+                dimBar.className = 'dimension-bar';
+                
+                const letters = dimName.split('-');
+                const leftLetter = letters[0];
+                const rightLetter = letters[1];
+                
+                // 创建左右标签
+                const labels = document.createElement('div');
+                labels.style.display = 'flex';
+                labels.style.justifyContent = 'space-between';
+                labels.style.marginBottom = '5px';
+                
+                const leftLabel = document.createElement('span');
+                leftLabel.className = 'dimension-label';
+                leftLabel.textContent = leftLetter;
+                if (type.includes(leftLetter)) leftLabel.classList.add('dimension-highlight');
+                
+                const rightLabel = document.createElement('span');
+                rightLabel.className = 'dimension-label';
+                rightLabel.textContent = rightLetter;
+                if (type.includes(rightLetter)) rightLabel.classList.add('dimension-highlight');
+                
+                labels.appendChild(leftLabel);
+                labels.appendChild(rightLabel);
+                dimElement.appendChild(labels);
+                
+                // 创建进度条
+                const dimFill = document.createElement('div');
+                dimFill.className = 'dimension-fill';
+                dimFill.style.width = `${dimValues[type.includes(leftLetter) ? leftLetter : rightLetter]}%`;
+                dimBar.appendChild(dimFill);
+                
+                dimElement.appendChild(dimBar);
+                container.appendChild(dimElement);
+            }
+        }
+        
+        // 初始化测试
+        function initializeTest() {
+            const testContainer = document.getElementById('test-container');
+            testContainer.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const questionSection = document.createElement('div');
+                questionSection.className = 'test-section';
+                questionSection.id = `question-${index}`;
+                
+                const questionHTML = `
+                    <div class="question" data-index="${index}">
+                        <p class="question-text">${index + 1}. ${question.text}</p>
+                        <div class="options">
+                            ${question.options.map((option, optIndex) => `
+                                <div class="option" data-value="${option.value}">
+                                    <span class="option-key">${String.fromCharCode(65 + optIndex)}</span>
+                                    <span class="option-text">${option.text}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                questionSection.innerHTML = questionHTML;
+                testContainer.appendChild(questionSection);
+                
+                // 添加选项点击事件
+                questionSection.querySelectorAll('.option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        const questionElement = this.closest('.question');
+                        const questionIndex = parseInt(questionElement.getAttribute('data-index'));
+                        
+                        // 移除同一问题中其他选项的选择状态
+                        questionElement.querySelectorAll('.option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // 标记当前选项为选中
+                        this.classList.add('selected');
+                        
+                        // 保存答案
+                        answers[questionIndex] = this.getAttribute('data-value');
+                        
+                        // 自动跳转到下一题
+                        if (questionIndex < questions.length - 1) {
+                            setTimeout(() => {
+                                showQuestion(questionIndex + 1);
+                            }, 300);
+                        } else {
+                            // 如果是最后一题，显示提交按钮
+                            showSubmitButton();
+                        }
+                        
+                        // 更新进度
+                        updateProgress();
+                    });
+                });
+            });
+        }
+        
+        // 开始测试
+        function startTest() {
+            // 重置状态
+            currentQuestion = 0;
+            answers = [];
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            
+            // 隐藏其他内容
+            document.getElementById('type-preview').style.display = 'none';
+            document.getElementById('start-test-btn').style.display = 'none';
+            document.getElementById('result-section').style.display = 'none';
+            
+            // 显示第一题
+            showQuestion(0);
+            updateProgress();
+            
+            // 滚动到测试区域
+            document.getElementById('question-0').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 显示指定问题
+        function showQuestion(index) {
+            // 隐藏所有问题
+            document.querySelectorAll('.test-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // 显示指定问题
+            const questionSection = document.getElementById(`question-${index}`);
+            if (questionSection) {
+                questionSection.classList.add('active-section');
+                currentQuestion = index;
+                
+                // 恢复已选择的选项
+                if (answers[index]) {
+                    questionSection.querySelectorAll('.option').forEach(option => {
+                        if (option.getAttribute('data-value') === answers[index]) {
+                            option.classList.add('selected');
+                        }
+                    });
+                }
+                
+                updateProgress();
+            }
+        }
+        
+        // 显示提交按钮
+        function showSubmitButton() {
+            const lastQuestion = document.getElementById(`question-${questions.length - 1}`);
+            if (!lastQuestion.querySelector('.submit-btn')) {
+                const submitBtn = document.createElement('button');
+                submitBtn.id = 'submit-test-btn';
+                submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> 查看测试结果';
+                submitBtn.style.marginTop = '30px';
+                submitBtn.style.width = '100%';
+                submitBtn.addEventListener('click', calculateResult);
+                lastQuestion.appendChild(submitBtn);
+            }
+        }
+        
+        // 更新进度
+        function updateProgress() {
+            const answeredCount = Object.keys(answers).length;
+            const progressPercent = Math.min(100, Math.round((answeredCount / questions.length) * 100));
+            
+            document.getElementById('current-question').textContent = answeredCount;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+        }
+        
+        // 计算测试结果
+        function calculateResult() {
+            // 确保所有问题都已回答
+            if (Object.keys(answers).length < questions.length) {
+                alert('请先完成所有问题！');
+                // 跳转到第一个未回答的问题
+                for (let i = 0; i < questions.length; i++) {
+                    if (!answers[i]) {
+                        showQuestion(i);
+                        break;
+                    }
+                }
+                return;
+            }
+            
+            // 计算各维度分数
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            
+            answers.forEach(answer => {
+                if (scores.hasOwnProperty(answer)) {
+                    scores[answer]++;
+                }
+            });
+            
+            // 确定人格类型
+            const type = 
+                (scores.E >= scores.I ? 'E' : 'I') +
+                (scores.S >= scores.N ? 'S' : 'N') +
+                (scores.T >= scores.F ? 'T' : 'F') +
+                (scores.J >= scores.P ? 'J' : 'P');
+            
+            // 计算匹配度
+            const totalQuestions = questions.length;
+            const maxPossibleScore = Math.max(scores.E, scores.I) + Math.max(scores.S, scores.N) + 
+                                   Math.max(scores.T, scores.F) + Math.max(scores.J, scores.P);
+            const matchPercentage = Math.round((maxPossibleScore / (totalQuestions / 4)) * 100);
+            
+            // 显示结果
+            showResult(type, matchPercentage);
+        }
+        
+        // 显示结果
+        function showResult(type, matchPercentage) {
+            const data = personalityTypes[type] || personalityTypes["ESTP"];
+            
+            // 更新结果内容
+            document.getElementById('result-type').textContent = data.fullName;
+            document.getElementById('result-emoji').textContent = data.emoji;
+            document.getElementById('result-full-type').textContent = type;
+            document.getElementById('match-percentage').textContent = `${matchPercentage}%`;
+            document.getElementById('result-desc').innerHTML = data.desc;
+            
+            // 更新特质
+            const traitsContainer = document.getElementById('result-traits');
+            traitsContainer.innerHTML = '';
+            data.traits.forEach(trait => {
+                const traitElement = document.createElement('div');
+                traitElement.className = 'trait';
+                traitElement.textContent = trait;
+                traitsContainer.appendChild(traitElement);
+            });
+            
+            document.getElementById('result-strengths').innerHTML = data.strengths;
+            document.getElementById('result-weaknesses').innerHTML = data.weaknesses;
+            document.getElementById('result-gear').innerHTML = data.gear;
+            
+            // 更新相似类型
+            const similarContainer = document.getElementById('similar-types');
+            similarContainer.innerHTML = '';
+            data.similar.forEach(simType => {
+                const simData = personalityTypes[simType];
+                if (simData) {
+                    const simElement = document.createElement('div');
+                    simElement.className = 'similar-type';
+                    simElement.textContent = simData.fullName;
+                    simElement.addEventListener('click', () => {
+                        showTypeDetail(simType);
+                        document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+                    });
+                    similarContainer.appendChild(simElement);
+                }
+            });
+            
+            // 更新维度比较
+            updateDimensionComparisonResult(type, scores);
+            
+            // 隐藏测试部分
+            document.querySelectorAll('.test-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // 显示结果区域
+            document.getElementById('result-section').style.display = 'block';
+            
+            // 滚动到结果
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // 更新维度比较结果
+        function updateDimensionComparisonResult(type, scores) {
+            const dimensions = {
+                "E-I": { 
+                    left: { letter: "E", value: scores.E / (scores.E + scores.I) * 100 || 50 },
+                    right: { letter: "I", value: scores.I / (scores.E + scores.I) * 100 || 50 }
+                },
+                "S-N": { 
+                    left: { letter: "S", value: scores.S / (scores.S + scores.N) * 100 || 50 },
+                    right: { letter: "N", value: scores.N / (scores.S + scores.N) * 100 || 50 }
+                },
+                "T-F": { 
+                    left: { letter: "T", value: scores.T / (scores.T + scores.F) * 100 || 50 },
+                    right: { letter: "F", value: scores.F / (scores.T + scores.F) * 100 || 50 }
+                },
+                "J-P": { 
+                    left: { letter: "J", value: scores.J / (scores.J + scores.P) * 100 || 50 },
+                    right: { letter: "P", value: scores.P / (scores.J + scores.P) * 100 || 50 }
+                }
+            };
+            
+            const container = document.getElementById('type-comparison');
+            container.innerHTML = '';
+            
+            for (const [dimName, dimData] of Object.entries(dimensions)) {
+                const dimElement = document.createElement('div');
+                dimElement.className = 'dimension';
+                
+                const dimNameElement = document.createElement('div');
+                dimNameElement.className = 'dimension-name';
+                dimNameElement.textContent = dimName;
+                dimElement.appendChild(dimNameElement);
+                
+                const letters = dimName.split('-');
+                const leftLetter = letters[0];
+                const rightLetter = letters[1];
+                
+                // 创建左右标签
+                const labels = document.createElement('div');
+                labels.style.display = 'flex';
+                labels.style.justifyContent = 'space-between';
+                labels.style.marginBottom = '5px';
+                
+                const leftLabel = document.createElement('span');
+                leftLabel.className = 'dimension-label';
+                leftLabel.textContent = `${leftLetter} (${Math.round(dimData.left.value)}%)`;
+                if (type.includes(leftLetter)) leftLabel.classList.add('dimension-highlight');
+                
+                const rightLabel = document.createElement('span');
+                rightLabel.className = 'dimension-label';
+                rightLabel.textContent = `${rightLetter} (${Math.round(dimData.right.value)}%)`;
+                if (type.includes(rightLetter)) rightLabel.classList.add('dimension-highlight');
+                
+                labels.appendChild(leftLabel);
+                labels.appendChild(rightLabel);
+                dimElement.appendChild(labels);
+                
+                // 创建进度条
+                const dimBar = document.createElement('div');
+                dimBar.className = 'dimension-bar';
+                
+                const dimFill = document.createElement('div');
+                dimFill.className = 'dimension-fill';
+                dimFill.style.width = `${dimData.left.value}%`;
+                dimBar.appendChild(dimFill);
+                
+                dimElement.appendChild(dimBar);
+                container.appendChild(dimElement);
+            }
+        }
+        
+        // 重新测试
+        function restartTest() {
+            // 重置状态
+            currentQuestion = 0;
+            answers = [];
+            scores = { E: 0, I: 0, S: 0, N: 0, T: 0, F: 0, J: 0, P: 0 };
+            
+            // 重置所有选项
+            document.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // 移除提交按钮
+            const submitBtn = document.getElementById('submit-test-btn');
+            if (submitBtn) submitBtn.remove();
+            
+            // 显示预览和开始按钮
+            document.getElementById('type-preview').style.display = 'grid';
+            document.getElementById('start-test-btn').style.display = 'block';
+            document.getElementById('result-section').style.display = 'none';
+            
+            // 隐藏所有测试问题
+            document.querySelectorAll('.test-section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // 重置进度
+            updateProgress();
+            
+            // 滚动到顶部
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
